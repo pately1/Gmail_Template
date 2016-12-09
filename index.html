@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <link rel="stylesheet" href="myStyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>E-mail App</title>
+</head>
+<body>
+    <div class="header">Gmail
+        <input class="responsive" type="text">
+        <button class="search"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
+    <div class="actions"><button class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div>
+    <nav>
+        <a href="#" id="compose" class="button1 font-14" onclick="overlay()">Compose</a>
+        <br>
+        <button id="inbox" class="button2 font-8 active" onclick="openInbox()">Inbox</button>
+        <button class="button2 font-8 ">Starred</button>
+        <button class="button2 font-8 ">Important</button>
+        <button id="sentBtn" class="button2 font-8 " onclick="openSent()">Sent Mail</button>
+        <button class="button2 font-8 ">Drafts</button>
+        <button class="button2 font-8 ">Circles</button>
+        <button class="button2 font-8 ">[IMap]/Trash</button>
+        <button class="button2 font-8 ">Notes</button>
+        <button class="button2 font-8 ">Personal</button>
+        <button class="button2 font-8 ">Travel</button>
+        <button class="button2 font-8 ">More</button>
+        <div class="line-break">
+            <hr/>
+            <div class="line-break2">
+                <hr/>
+                <i class="fa fa-address-book mini-margin" aria-hidden="true"></i>
+                <i class="fa fa-commenting mini-margin" aria-hidden="true"></i>
+                <i class="fa fa-phone mini-margin" aria-hidden="true"></i>
+            </div>
+        </div>
+    </nav>
+        <div id="sentmail" class="sent">
+        </div>
+        <div class="inbox" id="tab">
+            <input type="checkbox" /><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+        </div>
+    <div id="overlay">
+        <div>
+            To: <input id="recepient" type="text" class="compose">
+            Subject: <input id="subj" type="text" class="sub">
+            <textarea name="" id="txt" cols="35" rows="13" class="txtarea"></textarea>
+            <button class="send" id="sendBtn" onclick="send()">Send</button>
+        </div>
+    </div>
+        <script src="app.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!--<script src="app2.js"></script>-->
+</body>
+</html>
