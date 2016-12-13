@@ -12,7 +12,7 @@
         <input class="responsive" type="text">
         <button class="search"><i class="fa fa-search" aria-hidden="true"></i></button>
     </div>
-    <div class="actions"><button class="icon"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div>
+    <div class="actions"><button onclick="modalDelete()" class="icon" id="deleteBtn"><i class="fa fa-trash-o" aria-hidden="true"></i></button></div>
     <nav>
         <a href="#" id="compose" class="button1 font-14" onclick="overlay()">Compose</a>
         <br>
@@ -22,7 +22,7 @@
         <button id="sentBtn" class="button2 font-8 " onclick="openSent()">Sent Mail</button>
         <button class="button2 font-8 ">Drafts</button>
         <button class="button2 font-8 ">Circles</button>
-        <button class="button2 font-8 ">[IMap]/Trash</button>
+        <button class="button2 font-8 " id="trashBtn" onclick="openTrash()">[IMap]/Trash</button>
         <button class="button2 font-8 ">Notes</button>
         <button class="button2 font-8 ">Personal</button>
         <button class="button2 font-8 ">Travel</button>
@@ -39,15 +39,33 @@
     </nav>
         <div id="sentmail" class="sent">
         </div>
+        <div id="trashmail" class="trash">
+        </div>
         <div class="inbox" id="tab">
-            <input type="checkbox" /><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
-            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
-            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
-            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
-            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
-            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
-            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
-            <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            <div class="inbox_container">
+                <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            </div>
+            <div class="inbox_container">
+                <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            </div>
+            <div class="inbox_container">
+                <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            </div>
+            <div class="inbox_container">
+                <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            </div>
+            <div class="inbox_container">
+                <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            </div>
+            <div class="inbox_container">
+                <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            </div>
+            <div class="inbox_container">
+                <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            </div>
+            <div class="inbox_container">
+                <input type="checkbox"><span class="name font-8">Yash Patel</span><span class="data font-8">Dummy Email - </span><span class="email small font-8">Blah blah blah blah ....</span><br>
+            </div>
         </div>
     <div id="overlay">
         <div>
@@ -57,8 +75,49 @@
             <button class="send" id="sendBtn" onclick="send()">Send</button>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button id="sendModal" type="button" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Email Sent</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="okBtn">OK</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" id="deleteMod" class="close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnDel" onclick="cont()">Continue</button>
+                    <button type="button" id="cancelBtn">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
         <script src="app.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--<script src="app2.js"></script>-->
 </body>
 </html>
