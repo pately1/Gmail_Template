@@ -14,6 +14,7 @@
         var el = document.getElementById("overlay");
         el.style.visibility = (el.style.visibility == "visible") ? "hidden" : "visible";
     }
+
     function send() {
         var rec = document.getElementById("recepient").value;
         var subject = document.getElementById("subj").value;
@@ -55,6 +56,7 @@
         parent.appendChild(divs);
         console.log(parent);
     }
+
     function openSent() {
         var parent = document.getElementById("sentmail");
         parent.style.display = "inherit";
@@ -64,6 +66,7 @@
         document.getElementById("trashBtn").className = "button2 font-8";
         document.getElementById("sentBtn").className += " active";
     }
+
     function openInbox() {
         var parent = document.getElementById("sentmail");
         parent.style.display = "none";
@@ -101,12 +104,13 @@
         document.getElementById("sentBtn").className = "button2 font-8";
         document.getElementById("trashBtn").className += " active";
     }
+
     function modalDelete() {
         modal2.style.display = "block";
         modal2.style.overflow = "inherit";
         document.getElementById("cancelBtn").onclick = function () {
             modal2.style.display = "none";
-        }
+        };
         del_modal.onclick = function () {
             modal2.style.display = "none";
         }
@@ -116,3 +120,23 @@
         modal2.style.display = "none";
         deleteMails();
     }
+
+    var delBtn = document.getElementById("deleteBtn");
+
+    window.setInterval(function () {
+        var allCheckboxes = document.querySelectorAll("input[type='checkbox']");
+        var count = 0;
+        for (var i = 0; i < allCheckboxes.length; i++) {
+            if (allCheckboxes[i].checked == true) {
+                count++;
+            }
+        }
+        if (count > 0) {
+            delBtn.disabled = false;
+            delBtn.style.pointerEvents = "auto";
+        }
+        else {
+            delBtn.disabled = true;
+            delBtn.style.pointerEvents = "none";
+        }
+    },10);
