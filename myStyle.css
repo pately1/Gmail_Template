@@ -156,7 +156,7 @@ tr:hover {
     border: none;
     background-color: whitesmoke;
     cursor: pointer;
-    /*pointer-events: none;*/
+    pointer-events: none;
 }
 .icon:hover {
     background-color: white;
