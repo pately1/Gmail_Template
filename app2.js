@@ -62,45 +62,88 @@ $('#inbox').click(function () {
 
 $('#deleteBtn').click(function () {
     $('#deleteModal').modal('show');
-   // var checked = $("input:checked").parent().remove();
-   //  console.log(checked);
-   //  // checked.remove();
-   //  if ($('#sentmail').css("display") != "none") {
-   //      $('#tab').css("display", "none");
-   //      $('#inbox').addClass("font-8 button2").removeClass("active");
-   //      $('#trashmail').append(checked);
-   //      $('#sentmail').removeClass("sent").css("display", "inherit");
-   //  }
-   //  if ($('#tab').css("display") != "none") {
-   //      console.log("in");
-   //      $('#tab').css("display", "inherit");
-   //      $('#sentmail').css("display", "none");
-   //      $('#sentBtn').addClass("font-8 button2").removeClass("active");
-   //      $('#trashmail').append(checked).css("display", "none");
-   //      $('#sentmail').removeClass("sent");
-   //  }
 });
 
 $('#btnDel').click(function () {
+    $("#deleteModal").modal("hide");
+    var all_checked = $("input:checked");
     var checked = $("input:checked").parent().remove();
-     console.log(checked);
-    console.log($('input:checked').length);
+    //  console.log(checked);
+    //console.log($('input:checked').length);
     $('input:checked').attr('checked', false);
      // checked.remove();
      if ($('#sentmail').css("display") != "none") {
+         for (var a = 0; a < all_checked.length; a++) {
+             var rec = all_checked[a].nextSibling.innerHTML;
+             var sub = all_checked[a].nextSibling.nextSibling.innerHTML;
+             var txt = all_checked[a].nextSibling.nextSibling.nextSibling.innerHTML;
+             localStorage.setItem("sent"+a,rec+","+sub+","+txt);
+         }
          $('#tab').css("display", "none");
          $('#inbox').addClass("font-8 button2").removeClass("active");
-         $('#trashmail').append(checked);
+        for (var i = 0; i < localStorage.length; i++) {
+            var divs = $('<div></div>');
+            divs.addClass('inbox_container');
+            // var anchor = $("<a></a>");
+            // anchor.addClass("anchorTag");
+            var input = $("<input/>", {type: 'checkbox'});
+            var sp1 = $("<span></span>");
+            sp1.addClass("name");
+            sp1.text(localStorage.getItem("sent"+i).split(",")[0]);
+            console.log(sp1);
+            var sp2 = $("<span></span>");
+            sp2.addClass("data");
+            sp2.text(localStorage.getItem("sent"+i).split(",")[1]);
+            var sp3 = $("<span></span>");
+            sp3.addClass("email");
+            sp3.text(localStorage.getItem("sent"+i).split(",")[2]);
+            var br = $("<br>");
+            // anchor.append(input,sp1,sp2,sp3);
+            divs.append(input, sp1, sp2, sp3);
+
+            $('#trashmail').append(divs);
+        }
          $('#sentmail').removeClass("sent").css("display", "inherit");
      }
      if ($('#tab').css("display") != "none") {
-         console.log("in");
+         for (var a = 0; a < all_checked.length; a++) {
+             var rec = all_checked[a].nextSibling.innerHTML;
+             var sub = all_checked[a].nextSibling.nextSibling.innerHTML;
+             var txt = all_checked[a].nextSibling.nextSibling.nextSibling.innerHTML;
+             localStorage.setItem("inbx"+a,rec+","+sub+","+txt);
+             console.log(localStorage);
+         }
          $('#tab').css("display", "inherit");
          $('#sentmail').css("display", "none");
          $('#sentBtn').addClass("font-8 button2").removeClass("active");
-         $('#trashmail').append(checked).css("display", "none");
+
+         for (var i = 0; i < localStorage.length; i++) {
+             var divs = $('<div></div>');
+             divs.addClass('inbox_container');
+             // var anchor = $("<a></a>");
+             // anchor.addClass("anchorTag");
+             console.log(localStorage.getItem("inbx"+i));
+             var input = $("<input/>", {type: 'checkbox'});
+             var sp1 = $("<span></span>");
+             sp1.addClass("name");
+             sp1.text(localStorage.getItem("inbx" + i).split(",")[0]);
+             var sp2 = $("<span></span>");
+             sp2.addClass("data");
+             sp2.text(localStorage.getItem("inbx" + i).split(",")[1]);
+             var sp3 = $("<span></span>");
+             sp3.addClass("email");
+             sp3.text(localStorage.getItem("inbx" + i).split(",")[2]);
+             var br = $("<br>");
+             // anchor.append(input,sp1,sp2,sp3);
+             divs.append(input, sp1, sp2, sp3);
+             $('#trashmail').append(divs).css("display", "none");
+         }
          $('#sentmail').removeClass("sent");
      }
+    if ($('#trashmail').css("display") != "none") {
+        localStorage.clear();
+        console.log(localStorage);
+    }
 });
 
 $('#trashBtn').click(function () {
@@ -116,3 +159,6 @@ $("input:checkbox").click(function() {
     console.log("in");
     $("#deleteBtn").attr("disabled", !this.checked).css("pointer-events", "auto");
 });
+
+localStorage.clear();
+console.log(localStorage);
