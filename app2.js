@@ -1,164 +1,120 @@
-/**
- * Created by Yash on 12/7/2016.
- */
 'use strict';
 
+// Compose Email pop-up function
 $('#compose').click(function () {
     $('#overlay').css("visibility", "visible");
 });
 
-$('#sendBtn').click(function () {
-    var rec = $('#recepient').val();
-    var subject = $("#subj").val();
-    var mail = $("#txt").val();
-    $("#overlay").css("visibility","hidden");
-
-    var divs = $('<div></div>');
-    divs.addClass('inbox_container');
-    // var anchor = $("<a></a>");
-    // anchor.addClass("anchorTag");
-    var input = $("<input/>", {type: 'checkbox'});
-    var sp1 = $("<span></span>");
-    sp1.addClass("name");
-    sp1.text(rec);
-    var sp2 = $("<span></span>");
-    sp2.addClass("data");
-    sp2.text(subject + " - ");
-    var sp3 = $("<span></span>");
-    sp3.addClass("email");
-    sp3.text(mail);
-    var br = $("<br>");
-    // anchor.append(input,sp1,sp2,sp3);
-    divs.append(input, sp1, sp2, sp3);
-    $('#sentmail').append(divs).addClass("sent");
-    // $('#tab').css("visibility", "hidden");
-});
-
+// Click on send email button function
 $('#sendBtn').click(function () {
     $('#myModal').modal('show');
-    //$('#sentmail').css("display", "inherit").addClass("sent");
-    //$('#tab').css("display", "none");
-    //$('#inbox').addClass("font-8 button2").removeClass("active")    ;
-    //$('#sentBtn').addClass("active");
+    $("#overlay").css("visibility","hidden");
+    var divs = $('<div></div>');
+    var input = $("<input/>", {type: 'checkbox'});
+    var sp1 = $("<span></span>").addClass("name").text($('#recepient').val());
+    var sp2 = $("<span></span>").addClass("data").text($("#subj").val() + " - ");
+    var sp3 = $("<span></span>").addClass("email").text($("#txt").val());
+    divs.append(input, sp1, sp2, sp3);
+    $('#sentMail').append(divs).addClass("sent");
 });
 
-$('#sentBtn').click(function () {
-    $('#sentmail').css("display", "inherit");
-    $('#tab').css("display", "none");
-    $('#inbox').addClass("font-8 button2").removeClass("active")    ;
-    $('#trashBtn').addClass("font-8 button2").removeClass("active");
-    $('#sentBtn').addClass("active");
-    $('#trashmail').css('display', 'none');
-});
-
-$('#inbox').click(function () {
-    $('#sentmail').css("display", "none");
-    $('#tab').css("display", "inherit").css("visibility", "visible");
-    $('#inbox').addClass("active");
-    $('#sentBtn').removeClass("active");
-    $('#trashmail').css('display', 'none');
-    $('#trashBtn').removeClass("active");
-});
-
+// Confirmation Modal for deletion of E-mails
 $('#deleteBtn').click(function () {
     $('#deleteModal').modal('show');
 });
 
+// Click event for closing the modal.
+$('#okBtn, #sendModal, #deleteMod').click(function () {
+    $('#myModal').modal('hide');
+});
+
+// Click on Sent Mail button in left panel
+$('#sentBtn').click(function () {
+    $('#sentMail').css("display", "inherit");
+    $('#tab, #trashMail').css("display", "none");
+    $('#inbox, #trashBtn').addClass("font-8 button2").removeClass("active")    ;
+    $('#sentBtn').addClass("active");
+});
+
+// Click on Inbox button in left panel
+$('#inbox').click(function () {
+    $('#sentMail, #trashMail').css("display", "none");
+    $('#tab').css("display", "inherit");
+    $('#inbox').addClass("active");
+    $('#sentBtn, #trashBtn').removeClass("active");
+});
+
+// Click on Trash button in left panel
+$('#trashBtn').click(function () {
+    $('#trashMail').css("display", "inherit");
+    $('#tab, #sentMail').css("display", "none");
+    $('#inbox, #sentBtn').addClass("font-8 button2").removeClass("active")    ;
+    $('#trashBtn').addClass("active");
+});
+
+// Delete function when click on Continue in the Delete Modal
 $('#btnDel').click(function () {
     $("#deleteModal").modal("hide");
     var all_checked = $("input:checked");
-    var checked = $("input:checked").parent().remove();
-    //  console.log(checked);
-    //console.log($('input:checked').length);
+    $("input:checked").parent().remove();
     $('input:checked').attr('checked', false);
-     // checked.remove();
-     if ($('#sentmail').css("display") != "none") {
+
+     if ($('#sentMail').css("display") != "none") {
          for (var a = 0; a < all_checked.length; a++) {
              var rec = all_checked[a].nextSibling.innerHTML;
              var sub = all_checked[a].nextSibling.nextSibling.innerHTML;
              var txt = all_checked[a].nextSibling.nextSibling.nextSibling.innerHTML;
-             localStorage.setItem("sent"+a,rec+","+sub+","+txt);
+             localStorage.setItem("sent"+a,rec+"!@!"+sub+"!@!"+txt);
          }
+
          $('#tab').css("display", "none");
          $('#inbox').addClass("font-8 button2").removeClass("active");
+         $('#sentMail').removeClass("sent").css("display", "inherit");
+
         for (var i = 0; i < localStorage.length; i++) {
             var divs = $('<div></div>');
-            divs.addClass('inbox_container');
-            // var anchor = $("<a></a>");
-            // anchor.addClass("anchorTag");
-            var input = $("<input/>", {type: 'checkbox'});
-            var sp1 = $("<span></span>");
-            sp1.addClass("name");
-            sp1.text(localStorage.getItem("sent"+i).split(",")[0]);
-            console.log(sp1);
-            var sp2 = $("<span></span>");
-            sp2.addClass("data");
-            sp2.text(localStorage.getItem("sent"+i).split(",")[1]);
-            var sp3 = $("<span></span>");
-            sp3.addClass("email");
-            sp3.text(localStorage.getItem("sent"+i).split(",")[2]);
-            var br = $("<br>");
-            // anchor.append(input,sp1,sp2,sp3);
+            var input = $("<input>", {type: 'checkbox'});
+            var sp1 = $("<span></span>").addClass("name").text(localStorage.getItem("sent"+i).split("!@!")[0]);
+            var sp2 = $("<span></span>").addClass("data").text(localStorage.getItem("sent"+i).split("!@!")[1]);
+            var sp3 = $("<span></span>").addClass("email").text(localStorage.getItem("sent"+i).split("!@!")[2]);
             divs.append(input, sp1, sp2, sp3);
-
-            $('#trashmail').append(divs);
+            $('#trashMail').append(divs);
         }
-         $('#sentmail').removeClass("sent").css("display", "inherit");
      }
      if ($('#tab').css("display") != "none") {
          for (var a = 0; a < all_checked.length; a++) {
              var rec = all_checked[a].nextSibling.innerHTML;
              var sub = all_checked[a].nextSibling.nextSibling.innerHTML;
              var txt = all_checked[a].nextSibling.nextSibling.nextSibling.innerHTML;
-             localStorage.setItem("inbx"+a,rec+","+sub+","+txt);
-             console.log(localStorage);
+             localStorage.setItem("inbx"+a,rec+"!@!"+sub+"!@!"+txt);
          }
+
          $('#tab').css("display", "inherit");
-         $('#sentmail').css("display", "none");
+         $('#sentMail').css("display", "none");
          $('#sentBtn').addClass("font-8 button2").removeClass("active");
+         $('#sentMail').removeClass("sent");
 
          for (var i = 0; i < localStorage.length; i++) {
              var divs = $('<div></div>');
-             divs.addClass('inbox_container');
-             // var anchor = $("<a></a>");
-             // anchor.addClass("anchorTag");
-             console.log(localStorage.getItem("inbx"+i));
              var input = $("<input/>", {type: 'checkbox'});
-             var sp1 = $("<span></span>");
-             sp1.addClass("name");
-             sp1.text(localStorage.getItem("inbx" + i).split(",")[0]);
-             var sp2 = $("<span></span>");
-             sp2.addClass("data");
-             sp2.text(localStorage.getItem("inbx" + i).split(",")[1]);
-             var sp3 = $("<span></span>");
-             sp3.addClass("email");
-             sp3.text(localStorage.getItem("inbx" + i).split(",")[2]);
-             var br = $("<br>");
-             // anchor.append(input,sp1,sp2,sp3);
+             var sp1 = $("<span></span>").addClass("name").text(localStorage.getItem("inbx" + i).split("!@!")[0]);
+             var sp2 = $("<span></span>").addClass("data").text(localStorage.getItem("inbx" + i).split("!@!")[1]);
+             var sp3 = $("<span></span>").addClass("email").text(localStorage.getItem("inbx" + i).split("!@!")[2]);
              divs.append(input, sp1, sp2, sp3);
-             $('#trashmail').append(divs).css("display", "none");
+             $('#trashMail').append(divs).css("display", "none");
          }
-         $('#sentmail').removeClass("sent");
      }
-    if ($('#trashmail').css("display") != "none") {
+    if ($('#trashMail').css("display") != "none") {
         localStorage.clear();
-        console.log(localStorage);
     }
 });
 
-$('#trashBtn').click(function () {
-    $('#trashmail').css("display", "inherit");
-    $('#tab').css("display", "none");
-    $('#inbox').addClass("font-8 button2").removeClass("active")    ;
-    $('#sentBtn').addClass("font-8 button2").removeClass("active");
-    $('#trashBtn').addClass("active");
-    $('#sentmail').css('display', 'none');
-});
+// Function for continuously watching checkboxes
+window.setInterval(function () {
+    $("input:checkbox").click(function() {
+        $("#deleteBtn").attr("disabled", !this.checked).css("pointer-events", "auto");
+    });
+},1000);
 
-$("input:checkbox").click(function() {
-    console.log("in");
-    $("#deleteBtn").attr("disabled", !this.checked).css("pointer-events", "auto");
-});
-
+// Emptying localStorage in the beginning.
 localStorage.clear();
-console.log(localStorage);
